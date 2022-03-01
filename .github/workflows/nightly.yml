@@ -19,8 +19,8 @@ jobs:
         run: |
           set -xeuo pipefail
           echo will create pr
-
-          git remote set-url origin "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/v9n/dummy.git"
+          export GITHUB_USER="$GITHUB_ACTOR"
+          git remote set-url origin "https://$GITHUB_ACTOR:$github_token@github.com/v9n/dummy.git"
 
           # Pull all branches references down locally so subsequent commands can see them
           git fetch origin '+refs/heads/*:refs/heads/*' --update-head-ok
@@ -40,7 +40,6 @@ jobs:
           git checkout $branch
           git push origin $branch
 
-          export GITHUB_USER="$GITHUB_ACTOR"
 
           COMMAND="hub pull-request \
             -b sync-theme-$(date +%Y-%m-%d) \
