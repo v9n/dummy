@@ -30,6 +30,7 @@ jobs:
 
           git config --global user.email "vinh@miso.is"
           git config --global user.name "test action"
+          branch="test-`date +%Y-%m-%d_%H%M`"
           git checkout -b $branch
 
           echo new contet at >> new
@@ -37,7 +38,6 @@ jobs:
           git add ./new
 
           git commit -m "new at $(date)"
-          branch="test-`date +%Y-%m-%d_%H%M`"
           git push origin $branch
 
 
