@@ -30,6 +30,7 @@ jobs:
 
           git config --global user.email "vinh@miso.is"
           git config --global user.name "test action"
+          git checkout -b $branch
 
           echo new contet at >> new
           date >> new
@@ -37,13 +38,12 @@ jobs:
 
           git commit -m "new at $(date)"
           branch="test-`date +%Y-%m-%d_%H%M`"
-          git checkout -b $branch
           git push origin $branch
 
 
           COMMAND="hub pull-request \
-            -b $branch \
-            -h $merge_to_branch \
+            -b $merge_to_branch \
+            -h $branch \
             --no-edit \
             -l auto-sync \
             -m 'pull request title' -m 'this is body' -m 'another body' \
