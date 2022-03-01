@@ -42,10 +42,11 @@ jobs:
 
 
           COMMAND="hub pull-request \
-            -b sync-theme-$(date +%Y-%m-%d) \
+            -b $branch \
             -h $merge_to_branch \
             --no-edit \
-            $PR_ARG \
+            -l auto-sync \
+            -m 'pull request title' -m 'this is body' -m 'another body' \
           || true"
 
           PR_URL=$(sh -c "$COMMAND")
