@@ -1,0 +1,19 @@
+name: CI
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: |
+          echo 'create pr'
+          echo ::set-output name=createpr::true
+        id: check
+
+      - if: steps.check.outputs.createpr == 'true'
+        run: |
+          will create pr
+
