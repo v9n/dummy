@@ -47,7 +47,7 @@ jobs:
           PR_URL=$(sh -c "$COMMAND")
           echo $PR_URL
 
-        with:
+        env:
           merge_to_branch: master
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
