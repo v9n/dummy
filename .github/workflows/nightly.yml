@@ -36,8 +36,8 @@ jobs:
           git add ./new
 
           git commit -m "new at $(date)"
-          branch="test-`date +%Y-%m-%d:_%H:%M`"
-          git checkout $branch
+          branch="test-`date +%Y-%m-%d:_%H%M`"
+          git checkout -b $branch
           git push origin $branch
 
 
