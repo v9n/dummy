@@ -17,6 +17,7 @@ jobs:
       - name: create pr
         if: steps.check.outputs.createpr == 'true'
         run: |
+          set -xeuo pipefail
           echo will create pr
 
           git remote set-url origin "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/v9n/dummy.git"
@@ -32,10 +33,10 @@ jobs:
 
           echo new contet at >> new
           date >> new
-          git add new
+          git add ./new
 
-          git commit -m "new at `date`"
-          branch=test-`date +%Y-%m-%d:_%H:%M`
+          git commit -m "new at $(date)"
+          branch="test-`date +%Y-%m-%d:_%H:%M`"
           git checkout $branch
           git push origin $branch
 
