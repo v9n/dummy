@@ -27,9 +27,13 @@ jobs:
           # Print out all branches
           git --no-pager branch -a -vv
 
+          git config --global user.email "vinh@miso.is"
+          git config --global user.name "test action"
+
           echo new contet at >> new
           date >> new
           git add new
+
           git commit -m "new at `date`"
           branch=test-`date +%Y-%m-%d:_%H:%M`
           git checkout $branch
