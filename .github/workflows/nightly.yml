@@ -8,12 +8,46 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: |
+      - name: check create pr
+        run: |
           echo 'create pr'
           echo ::set-output name=createpr::true
         id: check
 
-      - if: steps.check.outputs.createpr == 'true'
+      - name: create pr
+        if: steps.check.outputs.createpr == 'true'
         run: |
           will create pr
+
+          git remote set-url origin "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/v9n/dummy.git"
+
+          # Pull all branches references down locally so subsequent commands can see them
+          git fetch origin '+refs/heads/*:refs/heads/*' --update-head-ok
+
+          # Print out all branches
+          git --no-pager branch -a -vv
+
+          echo new contet at >> new
+          date >> new
+          git add new
+          git commit -m "new at `date`"
+          branch=test-`date +%Y-%m-%d:_%H:%M`
+          git checkout $branch
+          git push origin $branch
+
+          export GITHUB_USER="$GITHUB_ACTOR"
+
+          COMMAND="hub pull-request \
+            -b sync-theme-$(date +%Y-%m-%d) \
+            -h $merge_to_branch \
+            --no-edit \
+            $PR_ARG \
+          || true"
+
+          PR_URL=$(sh -c "$COMMAND")
+          echo $PR_URL
+
+        with:
+          merge_to_branch: master
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
